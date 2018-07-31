@@ -115,8 +115,12 @@ def get_new(index) :
     doc['ID'] = str(data_doc['idNoticia'])
     doc['Titulo'] = str(data_doc['titulo'])
     doc['SubTitulo'] = str(data_doc['subTitulo'])
-    doc['Conteudo'] = str(data_doc['conteudo'])[:200] + '...'
+    doc['Conteudo'] = str(data_doc['conteudo'])[:400] + '...'
     return doc
+
+def getValidationDocs() :
+    return list(validation.filter(items=['idNoticia', 'titulo']).to_records(index=False))
+
 
 def main() :
     get_5_neighbors(index)

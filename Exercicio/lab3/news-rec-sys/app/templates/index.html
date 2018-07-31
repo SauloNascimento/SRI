@@ -5,22 +5,22 @@
 {% block body %}
 <div class="jumbotron">
   <h1>Recomendação de notícias</h1>
-  <p class="lead"></p>
-
-    Demo do Lab3 da disciplina SRI 2018.1 - UFCG
-
-
-    Digite um número que represente o id da notícia (1 a 8716):
+  <p class="lead">Demo do Lab3 da disciplina SRI 2018.1 - UFCG</p>
+  <p class="lead">
+      Dentro de um conjunto de 8716 noticias, 80% delas foram usadas para treinar
+      o modelo pelo algoritimo K-NN, as demais noticias são usadas para realizar
+      consultas aqui.
+  </p>
 
   <form method="POST">
+    <label for="selId">Escolha uma Noticia:</label>
+    <select class="form-control" name="selId">
+        {% for opt in valdocs %}
+            <option value="{{ opt[0] }}">{{ opt[0] }} - {{ opt[1] }}</option>
+        {% endfor %}
+    </select>
 
-    <input type="text"
-    class="form-control"
-    placeholder="IdNoticia"
-    style="width:30%;"
-    name=text>
-
-    <button type="submit" class="btn btn-primary">OK</button>
+    <button type="submit" class="btn btn-primary">Enviar</button>
 
   </form>
 </div>
