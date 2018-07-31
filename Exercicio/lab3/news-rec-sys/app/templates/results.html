@@ -1,0 +1,52 @@
+
+
+{% extends "base.html" %}
+{% block title %}Resultados{% endblock %}
+{% block body %}
+<div class="jumbotron">
+  <h1>Recomendações</h1>
+
+  <h4> Noticia escolhida: </h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>SubTitulo</th>
+            <th>Conteudo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+            <td>{{ new['ID'] }}</td>
+            <td>{{ new['Titulo'] }}</td>
+            <td>{{ new['SubTitulo'] }}</td>
+            <td>{{ new['Conteudo'] }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  <h4> 5 notícias mais similares: </h4>
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+            <th>ID</th>
+            <th>Titulo</th>
+            <th>SubTitulo</th>
+            <th>Conteudo</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for neighbor in neighbors %}
+        <tr>
+            <td>{{ neighbor['ID'] }}</td>
+            <td>{{ neighbor['Titulo'] }}</td>
+            <td>{{ neighbor['SubTitulo'] }}</td>
+            <td>{{ neighbor['Conteudo'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

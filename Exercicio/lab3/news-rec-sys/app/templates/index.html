@@ -1,0 +1,27 @@
+
+
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="jumbotron">
+  <h1>Recomendação de notícias</h1>
+  <p class="lead"></p>
+
+    Demo do Lab3 da disciplina SRI 2018.1 - UFCG
+
+
+    Digite um número que represente o id da notícia (1 a 8716):
+
+  <form method="POST">
+
+    <input type="text"
+    class="form-control"
+    placeholder="IdNoticia"
+    style="width:30%;"
+    name=text>
+
+    <button type="submit" class="btn btn-primary">OK</button>
+
+  </form>
+</div>
+{% endblock %}
