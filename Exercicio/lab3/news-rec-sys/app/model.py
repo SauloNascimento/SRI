@@ -1,7 +1,7 @@
 import pandas as pd
-import math
-from nltk.tokenize import RegexpTokenizer
 import string
+import numpy as np
+
 
 class WordInfo:
     'Classe que guarda informações sobre a palavra, como documentos em que ocorre, tf em cada documento e calculo de idf'
@@ -30,39 +30,10 @@ class WordInfo:
     def getTf(self, doc_id):  # Metodo que retorna o tf da palavra em um documento, ou 0 caso não ocorra
         return self.docs.get(doc_id, 0)
 
-# Carregamento dos dados
-data = pd.read_csv('app/estadao_noticias_eleicao.csv', encoding="utf-8")
-data.fillna('', inplace=True) # Preenchendo os campos vazios da tabela com ''
-tokenizer = RegexpTokenizer(r'\w+')
-data['tokenized_text'] = data.apply(lambda row: tokenizer.tokenize(row['titulo'] + ' ' + row['subTitulo'] + ' ' + row['conteudo']), axis=1)
+data = pd.read_csv('app/data.csv', encoding="utf-8")
+validation = pd.read_csv('app/validation.csv', encoding="utf-8")
 
-# Criação dos conjuntos de teste e validação
-train = data.sample(frac=0.8)
-validation = data.drop(train.index)
-
-vocab = {} # Vocabulario do conjunto de treinamento
-docs = {} # Vetores dos documentos
-
-# Montagem do vocabulário e vetores dos documentos do conjunto de treinamento
-for index, row in train.iterrows() :
-    id = row['idNoticia']
-    text = row['tokenized_text']
-    docs[id] = {}
-    for word in text:
-        if (word not in string.punctuation):
-            word_l = word.lower()
-            if (word_l not in vocab) :
-                vocab[word_l] = WordInfo(word_l)
-            vocab[word_l].found(id)
-            docs[id][word_l] = 1
-
-# Calculo dos idfs de cada palavra mapeada e atualização dos vetores dos documentos
-for word in vocab.keys() :
-    vocab[word].calculateIDF(len(docs))
-    idf = vocab[word].idf
-    for doc_i in docs.keys() :
-        if (word in docs[doc_i]) :
-            docs[doc_i][word] = vocab[word].getTf(doc_i) * idf
+docs, vocab = np.load('app/dicts.npy')
 
 '''Calcula a similaridade entre 2 documentos, representados como um vetor, atravez do produto escalar entre os vetores'''
 def similarity(docQ, docI) :
